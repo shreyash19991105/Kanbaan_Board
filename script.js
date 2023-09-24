@@ -4,14 +4,17 @@ const modalContainer = document.querySelector(".modal_cont");
 const modalColorContainer = document.querySelector('.modal_color_cont');
 const modalTextArea = document.querySelector("#modal_textarea");
 const mainContainer = document.querySelector(".main_cont");
+const deleteButton = document.querySelector(".delete_cont");
 
 
 /* variables */
 let modalVisible = true;
 let modalColorArr =  modalColorContainer.children;
 const uid = new ShortUniqueId({ length: 5 });
+let isLockedOpen =false;
 
 /* functions */
+/* Feature for modal pop up add and remove */
 addButton.addEventListener("click", (e) => {
   if (modalVisible) {
     modalContainer.style.display = "none";
@@ -23,18 +26,20 @@ addButton.addEventListener("click", (e) => {
   for(let i=0;i<modalColorArr.length;i++){
     modalColorArr[i].classList.remove("selected"); 
  }
-  modalColorArr[0].classList.add("selected");
+  modalColorArr[0].classList.add("selected");//to make red color selected on each pop 
 });
 
+/* selecting colors from modal container  */
 modalColorContainer.addEventListener("click", (e)=>{
     
-   /*  console.log(modalColorArr); */
+   
     for(let i=0;i<modalColorArr.length;i++){
        modalColorArr[i].classList.remove("selected"); 
     }
     e.target.classList.add("selected");
 })
 
+/* on pressing enter key modal disappears and ticket is created in main container */
 modalTextArea.addEventListener("keypress" , (e)=>{
     if(e.key =="Enter"){
         
@@ -52,7 +57,7 @@ modalTextArea.addEventListener("keypress" , (e)=>{
     }
 })
 
-
+/* helper function to create ticket */
 function createTicket(selectedColor, task){
    let id = uid.rnd();
     let ticket =`
@@ -72,8 +77,10 @@ mainContainer.appendChild(ticketContainer)
  const lock =ticketContainer.querySelector(".fa-solid");
 
  handelLock(ticketTypingArea ,lock);
+ handleDelete(ticketContainer,id);
 }
-let isLockedOpen =false;
+
+/* helper function to make div editable/noneditable  click on lock */
 function handelLock(ticketTypingArea , lock){
  lock.addEventListener("click" ,(e) =>{
     if(isLockedOpen){
@@ -89,3 +96,32 @@ function handelLock(ticketTypingArea , lock){
     }
  })
 }
+let deleteFlag =false;
+
+deleteButton.addEventListener("click", (e)=>{
+    if(deleteFlag){
+        e.currentTarget.style.backgroundColor  = "";
+        
+        deleteFlag=false;
+    }else{
+        e.currentTarget.style.backgroundColor  = "red";
+        deleteFlag=true;
+        
+
+    }
+   
+})
+
+
+function handleDelete(ticketContainer, id) {
+   ticketContainer.addEventListener("click", (e)=>{
+    if(deleteFlag){
+        let answer = confirm("Do you want delete this ticket");
+        if(answer){
+         ticketContainer.remove();
+        }
+     }
+   })
+}
+
+

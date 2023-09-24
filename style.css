@@ -16,6 +16,7 @@ html,body{
     --purple : purple;
 }
 
+/* toolbar */
 .toolbar{
 background-color: black;
 height: 5rem;
@@ -72,6 +73,13 @@ gap:4rem;
     flex-wrap: wrap;
   
     
+}
+.delete_cont , .add_cont{
+    width:50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 /* ticket start */
 .ticket_cont{
