@@ -70,7 +70,7 @@ mainContainer.appendChild(ticketContainer)
 
  const ticketTypingArea =ticketContainer.querySelector(".typing_area");
  const lock =ticketContainer.querySelector(".fa-solid");
- ticketTypingArea.setAttribute("contenteditable", "true")
+
  handelLock(ticketTypingArea ,lock);
 }
 let isLockedOpen =false;
