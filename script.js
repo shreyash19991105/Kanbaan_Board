@@ -35,11 +35,16 @@ modalColorContainer.addEventListener("click", (e) => {
     modalColorArr[i].classList.remove("selected");
   }
   e.target.classList.add("selected");
+  
+  
 });
+
+
 
 /* on pressing enter key modal disappears and ticket is created in main container */
 modalTextArea.addEventListener("keypress", (e) => {
-  if (e.key == "Enter") {
+  
+  if (e.key == "Enter" ) {
     modalContainer.style.display = "none";
 
     let selectedColor;
@@ -70,9 +75,11 @@ function createTicket(selectedColor, task) {
 
   const ticketTypingArea = ticketContainer.querySelector(".typing_area");
   const lock = ticketContainer.querySelector(".fa-solid");
+  const ticketColorElem = ticketContainer.querySelector(".color_bar");
 
   handelLock(ticketTypingArea, lock);
   handleDelete(ticketContainer, id);
+  handleColorChange(ticketColorElem ,id);
 }
 handleFilter();
 /* helper function to make div editable/noneditable  click on lock */
@@ -122,14 +129,37 @@ function handleFilter() {
     let selectedColor = temparr[1];
 
     let ticketArray = mainContainer.querySelectorAll(".ticket_cont");
+    
     for (let i = 0; i < ticketArray.length; i++) {
       let ticketContainer = ticketArray[i];
       let isPresent = ticketContainer.querySelector(`.${selectedColor}`);
       if (isPresent === null) {
         ticketContainer.style.display = "none";
+        alert("no such ticket color present")
       } else {
         ticketContainer.style.display = "block";
       }
     }
   });
+}
+
+
+const colorArr =["red" ,"blue","green","purple"];
+
+function handleColorChange(ticketColorElem ,id){
+  ticketColorElem.addEventListener("click",()=>{
+
+    
+      let currentColor =ticketColorElem.classList[1];
+      
+      let currentColorIndex = colorArr.indexOf(`${currentColor}`);
+     
+      let newColorIndex = (currentColorIndex +1)%colorArr.length;
+      let newColor =colorArr[newColorIndex];
+      
+      ticketColorElem.classList.remove(`${currentColor}`);
+      ticketColorElem.classList.add(`${newColor}`)
+    
+  })
+  
 }
